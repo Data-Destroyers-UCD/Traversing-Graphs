@@ -1,5 +1,11 @@
+import java.util.HashMap;
+import java.util.Map;
+
 import datastructures.Edge;
+import datastructures.Entry;
 import datastructures.PositionalList;
+import datastructures.SpanningTree;
+import datastructures.SpanningTree.SpanningTreeNode;
 
 public class Printer {
 	public static void Print(String[] stringArray) {
@@ -37,6 +43,20 @@ public class Printer {
 			System.out.print(" " + e.getElement());
 		}
 		System.out.println();
+		
+	}
+	
+	public static void Print(SpanningTree tree) {
+		HashMap<String, SpanningTreeNode> nodesMap = tree.GetNodesMap();
+		double cost = 0.0;
+		for (Map.Entry<String, SpanningTreeNode> entry : nodesMap.entrySet()) {
+            //String key = entry.getKey();
+			SpanningTreeNode value = entry.getValue();
+			cost += value.Weight;
+            System.out.println(value.FromNode + " -> " + value.ToNode + " = " + value.Weight);
+        }
+        System.out.println("Spanning Tree Cost: " + cost);
+
 		
 	}
 }

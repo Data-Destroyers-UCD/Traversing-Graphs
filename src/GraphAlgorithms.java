@@ -1,6 +1,7 @@
 
 
 import java.util.Set;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import datastructures.*;
@@ -208,6 +209,7 @@ public class GraphAlgorithms {
           // perform relaxation step on edge (u,v)
           double wgt = e.getElement();
           if (d.get(u) + wgt < d.get(v)) {              // better path to v?
+        	  
             d.put(v, d.get(u) + wgt);                   // update the distance
             pq.replaceKey(pqTokens.get(v), d.get(v));   // update the pq entry
           }
@@ -241,9 +243,9 @@ public class GraphAlgorithms {
    *
    * Result is returned as a list of edges that comprise the MST (in arbitrary order).
    */
-  public static <V> PositionalList<Edge<Double>> KruskalMST(Graph<V,Double> g) {
+  public static <V> SpanningTree KruskalMST(Graph<V,Double> g) {
     // tree is where we will store result as it is computed
-    PositionalList<Edge<Double>> tree = new LinkedPositionalList<>();
+    SpanningTree tree = new SpanningTree();
     // pq entries are edges of graph, with weights as keys
     PriorityQueue<Double, Edge<Double>> pq = new HeapPriorityQueue<>();
     // union-find forest of components of the graph
@@ -258,19 +260,90 @@ public class GraphAlgorithms {
       pq.insert(e.getElement(), e);
 
     int size = g.numVertices();
-    // while tree not spanning and unprocessed edges remain...
-    while (tree.size() != size - 1 && !pq.isEmpty()) {
+    // while tree not spanning and unprocessed edges remain
+    while (tree.Size() != size - 1 && !pq.isEmpty()) {
       Entry<Double, Edge<Double>> entry = pq.removeMin();
       Edge<Double> edge = entry.getValue();
       Vertex<V>[] endpoints = g.endVertices(edge);
       Position<Vertex<V>> a = forest.find(positions.get(endpoints[0]));
       Position<Vertex<V>> b = forest.find(positions.get(endpoints[1]));
       if (a != b) {
-        tree.addLast(edge);
+        tree.Insert(endpoints[0].getElement().toString(), endpoints[1].getElement().toString(), edge.getElement());
         forest.union(a,b);
       }
     }
 
     return tree;
   }
+  
+  public static <V> SpanningTree BoruvkaMST(Graph<V,Double> g) {
+	  SpanningTree tree = new SpanningTree();
+	  // T <- V {just the vertices of G}
+	  Graph<String, Double> t = new AdjacencyMapGraph<String, Double>(false);
+	  for (Vertex<V> v : g.vertices()) {
+		  t.insertVertex(v.getElement().toString());  
+      }	
+	  
+	  while(t.numEdges() < g.numVertices() - 1) {
+		  
+	  }
+	 
+	  
+	  
+	  return tree;
+  }
+  
+  
+  public static <V> SpanningTree PrimMST(Graph<V,Double> g) {
+	  SpanningTree tree = new SpanningTree();
+	  
+	  AdaptablePriorityQueue<Double, Vertex<V>> pq = new HeapAdaptablePriorityQueue<>();
+	  
+	  ProbeHashMap<Vertex<V>, Double> keys = new ProbeHashMap<Vertex<V>, Double>();
+	  	  
+	  ProbeHashMap<Vertex<V>, Double> presence = new ProbeHashMap<Vertex<V>, Double>();
+	  
+	  Map<Vertex<V>, Entry<Double,Vertex<V>>> pqTokens =  new ProbeHashMap<>();
+
+	  for (Vertex<V> v : g.vertices()) {
+		  keys.put(v, Double.MAX_VALUE);
+
+		  pqTokens.put(v, pq.insert(keys.get(v), v)); 
+      }	
+	  
+	  keys.put(g.vertices().iterator().next(), 0.0);
+	  
+	  
+	 while(!pq.isEmpty()) {
+		 Vertex<V> v = pq.removeMin().getValue();
+		 pqTokens.remove(v); 
+		 double min = Double.MAX_VALUE;
+		 Vertex<V> niceVertex = null;
+		 for (Edge<Double> e : g.outgoingEdges(v)) {
+			 Vertex<V> w = g.opposite(v, e);
+			 if(presence.get(w) == null) {
+				 double wgt = e.getElement();
+		          if (keys.get(v) + wgt < keys.get(w)) {              // better path to v?
+		        	keys.put(w, keys.get(v) + wgt);                   // update the distance
+		            pq.replaceKey(pqTokens.get(w), keys.get(v));   // update the pq entry
+		            
+		          }
+			 }
+			 
+		 }
+		
+		 if(niceVertex != null)
+			 tree.Insert(v.getElement().toString(), niceVertex.getElement().toString(), min);
+
+		 
+	 }
+	  
+	 
+	  
+	  return tree;
+  }
+  
+
 }
+
+

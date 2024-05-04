@@ -9,7 +9,7 @@ public class GraphManager {
 	
 	public GraphManager(ArrayList<String[]> edges) {
 		this.graph = this.graphFromEdgelist(edges, false);
-		Printer.Print(GraphAlgorithms.<String>KruskalMST(this.graph)); 
+		Printer.Print(GraphAlgorithms.<String>PrimMST(this.graph)); 
 		//
 	}
 	
