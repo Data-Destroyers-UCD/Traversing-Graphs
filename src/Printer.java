@@ -1,3 +1,5 @@
+import datastructures.Edge;
+import datastructures.PositionalList;
 
 public class Printer {
 	public static void Print(String[] stringArray) {
@@ -28,5 +30,13 @@ public class Printer {
 	
 	public static void Print(double value) {
 		System.out.println(value);
+	}
+
+	public static <T> void Print(PositionalList<Edge<T>> mst) {
+		for(Edge<T> e : mst) {
+			System.out.print(" " + e.getElement());
+		}
+		System.out.println();
+		
 	}
 }

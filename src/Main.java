@@ -14,7 +14,7 @@ import java.util.List;		// Class for creating List Structures
 public class Main {
 	// Entry point for java compiler
 	public static void main(String[] args) throws IOException {
-		String dataPath = "data/temp.edges";
+		String dataPath = "data/V6E7.graph";
 		char commentChar = '%';
 		ArrayList<String[]> edges = new ArrayList<String[]>();
 		
@@ -24,7 +24,7 @@ public class Main {
 		// Columns = [ First Name,Last Name,Email,Password ]
 		try (BufferedReader br = new BufferedReader(new FileReader(dataPath))) {
 		    // Skip first line of headers
-			String line = br.readLine();
+			String line = "";
 		    
 		    // var to keep track of list loading time
 		    long totalLBTime = 0;
