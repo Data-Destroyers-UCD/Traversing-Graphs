@@ -1,11 +1,13 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import datastructures.Edge;
-import datastructures.Entry;
+
 import datastructures.PositionalList;
+
 import datastructures.SpanningTree;
-import datastructures.SpanningTree.SpanningTreeNode;
+import datastructures.SpanningTree.SpanningTreeEdge;
 
 public class Printer {
 	public static void Print(String[] stringArray) {
@@ -47,11 +49,11 @@ public class Printer {
 	}
 	
 	public static void Print(SpanningTree tree) {
-		HashMap<String, SpanningTreeNode> nodesMap = tree.GetNodesMap();
+		HashMap<String, SpanningTreeEdge> nodesMap = tree.GetNodesMap();
 		double cost = 0.0;
-		for (Map.Entry<String, SpanningTreeNode> entry : nodesMap.entrySet()) {
+		for (Map.Entry<String, SpanningTreeEdge> entry : nodesMap.entrySet()) {
             //String key = entry.getKey();
-			SpanningTreeNode value = entry.getValue();
+			SpanningTreeEdge value = entry.getValue();
 			cost += value.Weight;
             System.out.println(value.FromNode + " -> " + value.ToNode + " = " + value.Weight);
         }
@@ -59,4 +61,23 @@ public class Printer {
 
 		
 	}
+	
+	
+	public static <T> void Print(HashSet<T> set) {
+		for(T e : set) {
+			System.out.print(" " + e);
+		}
+		System.out.println();
+	}
+
+	public static void Print(HashMap<String, Double> wts) {
+		for (java.util.Map.Entry<String, Double> entry : wts.entrySet()) {
+
+		
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+		
+	}
+	
+	
 }

@@ -14,7 +14,7 @@ import java.util.List;		// Class for creating List Structures
 public class Main {
 	// Entry point for java compiler
 	public static void main(String[] args) throws IOException {
-		String dataPath = "data/V6E7.graph";
+		String dataPath = "data/V4E4.graph";
 		char commentChar = '%';
 		ArrayList<String[]> edges = new ArrayList<String[]>();
 		

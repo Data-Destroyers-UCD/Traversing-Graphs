@@ -3,6 +3,7 @@
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import datastructures.*;
 
@@ -294,54 +295,96 @@ public class GraphAlgorithms {
   }
   
   
+  
+  
   public static <V> SpanningTree PrimMST(Graph<V,Double> g) {
 	  SpanningTree tree = new SpanningTree();
+	  
+	  int[] pi = new int[g.numVertices()];
+	  int[] ind = new int[g.numVertices()];
+	  
+	  HashMap<String, Double> wts = new  HashMap<String, Double>();
+	  
+	  for (int i = 0; i < ind.length; i++) {
+		  ind[i] = -1;
+	}
 	  
 	  AdaptablePriorityQueue<Double, Vertex<V>> pq = new HeapAdaptablePriorityQueue<>();
 	  
 	  ProbeHashMap<Vertex<V>, Double> keys = new ProbeHashMap<Vertex<V>, Double>();
 	  	  
-	  ProbeHashMap<Vertex<V>, Double> presence = new ProbeHashMap<Vertex<V>, Double>();
+	  HashSet<Vertex<V>> visited = new HashSet<>();
 	  
 	  Map<Vertex<V>, Entry<Double,Vertex<V>>> pqTokens =  new ProbeHashMap<>();
 
 	  for (Vertex<V> v : g.vertices()) {
-		  keys.put(v, Double.MAX_VALUE);
-
-		  pqTokens.put(v, pq.insert(keys.get(v), v)); 
-      }	
-	  
-	  keys.put(g.vertices().iterator().next(), 0.0);
-	  
+          keys.put(v, Double.POSITIVE_INFINITY);
+      }
+      // Start from the first vertex
+      Vertex<V> startVertex = g.vertices().iterator().next();
+      keys.put(startVertex, 0.0);
+      
+      // Insert all vertices into the priority queue
+      for (Vertex<V> v : g.vertices()) {
+          pqTokens.put(v, pq.insert(keys.get(v), v));
+      }
+	 
+	  //Printer.Print(g.toString()); 
 	  
 	 while(!pq.isEmpty()) {
-		 Vertex<V> v = pq.removeMin().getValue();
-		 pqTokens.remove(v); 
-		 double min = Double.MAX_VALUE;
-		 Vertex<V> niceVertex = null;
-		 for (Edge<Double> e : g.outgoingEdges(v)) {
-			 Vertex<V> w = g.opposite(v, e);
-			 if(presence.get(w) == null) {
+		 Vertex<V> u = pq.removeMin().getValue();
+         pqTokens.remove(u);
+         visited.add(u);
+         
+
+		 for (Edge<Double> e : g.outgoingEdges(u)) {
+			 Vertex<V> v = g.opposite(u, e);
+			 //Printer.Print(visited);
+			 if (!visited.contains(v)) {
 				 double wgt = e.getElement();
-		          if (keys.get(v) + wgt < keys.get(w)) {              // better path to v?
-		        	keys.put(w, keys.get(v) + wgt);                   // update the distance
-		            pq.replaceKey(pqTokens.get(w), keys.get(v));   // update the pq entry
-		            
-		          }
+				 if (wgt < keys.get(v)) {
+
+                     keys.put(v, wgt);
+                     pq.replaceKey(pqTokens.get(v), wgt);
+                     int x = Integer.parseInt(u.getElement().toString());
+                     int y = Integer.parseInt(v.getElement().toString());
+                     pi[y] = x;
+                     ind[y] = y;
+                     if(x < y) {
+                    	 wts.put(x + "" + y, wgt);
+                     } else {
+                    	 wts.put(y + "" + x + "", wgt);
+                     }
+                     
+                     //Printer.Print( u.getElement().toString() + " " + v.getElement().toString());
+                  // Update minimum weight edge
+         	         //tree.Insert(u.getElement().toString(), v.getElement().toString(), wgt);
+
+                 }
 			 }
 			 
-		 }
+			 
 		
-		 if(niceVertex != null)
-			 tree.Insert(v.getElement().toString(), niceVertex.getElement().toString(), min);
-
+		 }
+		 
+	
 		 
 	 }
-	  
-	 
-	  
+
+	 for(int i = 1; i < ind.length; i++) {
+		 
+		 if(i < pi[i]) {
+			 tree.Insert("" + i, "" + pi[i], wts.get(i + "" + pi[i]));
+         } else {
+        	 tree.Insert("" + pi[i], "" + i, wts.get(pi[i] + "" + i));
+         }
+		 
+	 }
+
 	  return tree;
   }
+  
+ 
   
 
 }
