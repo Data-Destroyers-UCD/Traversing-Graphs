@@ -251,12 +251,6 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
    */
   public String toString() {
     StringBuilder sb = new StringBuilder();
-//     sb.append("Edges:");
-//     for (Edge<E> e : edges) {
-//       Vertex<V>[] verts = endVertices(e);
-//       sb.append(String.format(" (%s->%s, %s)", verts[0].getElement(), verts[1].getElement(), e.getElement()));
-//     }
-//     sb.append("\n");
     for (Vertex<V> v : vertices) {
       sb.append("Vertex " + v.getElement() + "\n");
       if (isDirected)
