@@ -277,23 +277,6 @@ public class GraphAlgorithms {
     return tree;
   }
   
-  public static <V> SpanningTree BoruvkaMST(Graph<V,Double> g) {
-	  SpanningTree tree = new SpanningTree();
-	  // T <- V {just the vertices of G}
-	  Graph<String, Double> t = new AdjacencyMapGraph<String, Double>(false);
-	  for (Vertex<V> v : g.vertices()) {
-		  t.insertVertex(v.getElement().toString());  
-      }	
-	  
-	  while(t.numEdges() < g.numVertices() - 1) {
-		  
-	  }
-	 
-	  
-	  
-	  return tree;
-  }
-  
   
   
   

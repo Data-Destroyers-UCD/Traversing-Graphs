@@ -14,6 +14,16 @@ import java.util.List;		// Class for creating List Structures
 public class Main {
 	// Entry point for java compiler
 	public static void main(String[] args) throws IOException {
+		String[] nodeCounts = {"10", "50", "100", "500", "1000"};
+		String[] edgeDensities = {"0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"};
+		
+		
+		for(String count : nodeCounts) {
+			for(String density : edgeDensities) {
+				
+			}
+		}
+		
 		String dataPath = "data/V4E4.graph";
 		char commentChar = '%';
 		ArrayList<String[]> edges = new ArrayList<String[]>();
