@@ -73,7 +73,7 @@ public class Main {
 				Printer.Print("\n\nTesting Kruskal");
 				// Time kruskal and put the time in the heatmap
 				tree = graphManager.TestKruskal();
-				// Print Tree cost
+				// Print Tree cost, set the boolean to true if you want to see the nodes
 				Printer.Print(tree, false);
 				long opTime = System.currentTimeMillis() - startTime; // calculate the time
 				// Add the time to the matrix
@@ -86,7 +86,7 @@ public class Main {
 				Printer.Print("\n\nTesting Prims");
 				// Time Prims and put the time in the heatmap
 				tree = graphManager.TestPrims();
-				// Print Tree cost
+				// Print Tree cost, set the boolean to true if you want to see the nodes
 				Printer.Print(tree, false);
 				opTime = System.currentTimeMillis() - startTime; // calculate the time
 				// Add the time to the matrix
@@ -105,10 +105,8 @@ public class Main {
 		Printer.Print("\n");
 		for(int i = 0; i < nodeCounts.length; i++) {
 			Printer.Print(nodeCounts[i]);
-			for(int j = 0; j < edgeDensities.length; j++) {
-				
-				Printer.Print("\t" + kruskalHeatmap[i][j]);
-				
+			for(int j = 0; j < edgeDensities.length; j++) {	
+				Printer.Print("\t" + kruskalHeatmap[i][j]);	
 			}
 			Printer.Print("\n");
 		}
@@ -123,10 +121,8 @@ public class Main {
 		Printer.Print("\n");
 		for(int i = 0; i < nodeCounts.length; i++) {
 			Printer.Print(nodeCounts[i]);
-			for(int j = 0; j < edgeDensities.length; j++) {
-				
-				Printer.Print("\t" + primHeatmap[i][j]);
-				
+			for(int j = 0; j < edgeDensities.length; j++) {	
+				Printer.Print("\t" + primHeatmap[i][j]);	
 			}
 			Printer.Print("\n");
 		}
