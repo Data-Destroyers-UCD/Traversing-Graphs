@@ -9,7 +9,7 @@ public class GraphManager {
 	
 	public GraphManager(ArrayList<String[]> edges) {
 		this.graph = this.graphFromEdgelist(edges, false);
-		Printer.Print(GraphAlgorithms.<String>PrimMST(this.graph)); 
+		//Printer.Print(GraphAlgorithms.<String>PrimMST(this.graph)); 
 		//
 	}
 	
@@ -42,6 +42,18 @@ public class GraphManager {
 	    }
 	    return g;
 	}
+	
+	public SpanningTree TestKruskal() {
+		
+		return GraphAlgorithms.<String>KruskalMST(this.graph);
+	}
+	
+	public SpanningTree TestPrims() {
+		
+		return GraphAlgorithms.<String>PrimMST(this.graph);
+	}
+	
+	
 	
 
 }
