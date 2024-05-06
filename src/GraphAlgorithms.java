@@ -27,7 +27,7 @@ public class GraphAlgorithms {
     // Loop through all vertices a create forest clusters for each vertex
     for (Vertex<V> v : g.vertices())
       positions.put(v, forest.makeCluster(v));
-    // Insert all edges into the priority queue
+    // Insert all edges into the priority queue stored in order of weights
     for (Edge<Double> e : g.edges())
       pq.insert(e.getElement(), e);
     
@@ -44,7 +44,7 @@ public class GraphAlgorithms {
       // Get the forest position vertices associated with the edge
       Position<Vertex<V>> a = forest.find(positions.get(endpoints[0]));
       Position<Vertex<V>> b = forest.find(positions.get(endpoints[1]));
-      // Check if the vertices are not the same
+      // Check if the vertices are not in the same tree
       if (a != b) {
     	 // Insert the from vertex, to vertex and weight associated with the edge
         tree.Insert(endpoints[0].getElement().toString(), endpoints[1].getElement().toString(), edge.getElement());
@@ -52,7 +52,7 @@ public class GraphAlgorithms {
         forest.union(a,b);
       }
     }
-    // Return the minimum spannning tree
+    // Return the minimum spanning tree
     return tree;
   }
   
